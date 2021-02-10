@@ -6,6 +6,7 @@ public class Impassible extends Tile{
 
     public Impassible(int row, int col) {
         super(row, col);
+        this.color = nBlue;
     }
 
     @Override
@@ -13,9 +14,8 @@ public class Impassible extends Tile{
 
         int tileX = this.col * this.TILE_SIZE;
         int tileY = this.row * this.TILE_SIZE;
-        Color nBlue = new Color (0, 80, 239);
 
-        g.setColor(nBlue);
+        g.setColor(this.color);
         g.fillRect(tileX,tileY,TILE_SIZE,TILE_SIZE);
 
         drawBorders(g,tileX,tileY);

@@ -4,9 +4,9 @@ import java.awt.*;
 
 public class GPS extends Tile{
 
-
     public GPS(int row, int col) {
         super(row, col);
+        this.color = nGreen;
     }
 
     @Override
@@ -14,12 +14,12 @@ public class GPS extends Tile{
 
         int tileX = this.col * this.TILE_SIZE;
         int tileY = this.row * this.TILE_SIZE;
-        Color nGreen = new Color(213, 232, 212);
 
-        g.setColor(nGreen);
+        g.setColor(this.color);
         g.fillRect(tileX,tileY,TILE_SIZE,TILE_SIZE);
 
         drawBorders(g,tileX,tileY);
     }
+
 
 }

@@ -6,7 +6,13 @@ public abstract class Tile {
 
     protected int row;
     protected int col;
+    protected Color color;
     public static final int TILE_SIZE = 70;
+
+    public static Color nYellow = new Color(254, 241, 203);
+    public static Color nGreen = new Color(213, 232, 212);
+    public static Color nPink = new Color(248, 206, 204);
+    public static Color nBlue = new Color (0, 80, 239);
 
     /**
      *  Конструктор за полетата.
@@ -32,5 +38,22 @@ public abstract class Tile {
         g.setColor(Color.black);
         g.drawRect(tileX,tileY,TILE_SIZE,TILE_SIZE);
     }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    /*public void drawQuestionMark(Graphics g) {
+
+        int tileX = this.col * this.TILE_SIZE;
+        int tileY = this.row * this.TILE_SIZE;
+
+        g.setColor(Color.black);
+        g.drawString("?", tileX + 35,tileY + 35);
+    } */
 
 }
