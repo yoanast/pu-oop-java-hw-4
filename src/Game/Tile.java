@@ -7,6 +7,7 @@ public abstract class Tile {
     protected int row;
     protected int col;
     protected Color color;
+    protected String id;
     public static final int TILE_SIZE = 70;
 
     public static Color nYellow = new Color(254, 241, 203);
@@ -47,13 +48,8 @@ public abstract class Tile {
         this.color = color;
     }
 
-    /*public void drawQuestionMark(Graphics g) {
-
-        int tileX = this.col * this.TILE_SIZE;
-        int tileY = this.row * this.TILE_SIZE;
-
-        g.setColor(Color.black);
-        g.drawString("?", tileX + 35,tileY + 35);
-    } */
+    public String getId() {
+        return id;
+    }
 
 }

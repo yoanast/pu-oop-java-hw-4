@@ -7,6 +7,7 @@ public class GPS extends Tile{
     public GPS(int row, int col) {
         super(row, col);
         this.color = nGreen;
+        this.id = "GPS";
     }
 
     @Override

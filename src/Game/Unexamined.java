@@ -8,6 +8,7 @@ public class Unexamined extends Tile{
 
         super(row, col);
         this.color = nPink;
+        this.id = "Unexamined";
     }
 
     @Override

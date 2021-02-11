@@ -7,6 +7,7 @@ public class Impassible extends Tile{
     public Impassible(int row, int col) {
         super(row, col);
         this.color = nBlue;
+        this.id = "Impassible";
     }
 
     @Override

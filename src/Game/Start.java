@@ -8,6 +8,7 @@ public class Start extends Tile{
 
         super(row, col);
         this.color = nYellow;
+        this.id = "Start";
     }
 
     @Override

@@ -11,6 +11,7 @@ public class GameBoard extends JFrame implements MouseListener {
     public static int firstRandomNumber;
     public static int secondRandomNumber;
     Player player = new Player(firstRandomNumber, secondRandomNumber);
+    BabaYaga babaYaga = new BabaYaga(firstRandomNumber, secondRandomNumber);
     public Object[][] tileCollection;
     public Object selectedTile;
 
@@ -33,28 +34,30 @@ public class GameBoard extends JFrame implements MouseListener {
 
         int row = this.getDimensionsBasedOnCoordinates(e.getY());
         int col = this.getDimensionsBasedOnCoordinates(e.getX());
-        Tile tile = (Tile)this.getTile(row, col);
+        Tile tile = (Tile) this.getTile(row, col);
 
-        if(tile.getColor() != Impassible.nBlue && selectedTile == null) {
+        if (tile.getId() != "Impassible" && tile.getColor() != Tile.nBlue && selectedTile == null) {
             this.selectedTile = this.getTile(row, col);
             tile.setColor(Tile.nYellow);
-            //tile.drawQuestionMark();
             repaint();
-        }
-        else if (this.selectedTile != null || tile.getColor() != Impassible.nBlue) {
-
+        } else if (this.selectedTile != null && tile.getId() == "GPS") {
+            movePlayer(row, col);
+            hasPlayerFoundBabaYaga();
+            updateBoard(row,col);
+        } else if ( tile.getColor() != Tile.nBlue || tile.getId() != "Impassible" && this.selectedTile != null) {
             tile.setColor(getNewColor());
-            if(tile.getColor() == Tile.nYellow) {
+            if (tile.getColor() == Tile.nYellow) {
                 movePlayer(row, col);
             } else {
-                JOptionPane.showMessageDialog(null,"Невъзможно преместване върху синьо квадратче!",
-                        "Грешка", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Невъзможно преместване, защото се падна синьо квадратче!",
+                        "Греда", JOptionPane.WARNING_MESSAGE);
             }
             updateBoard(row, col);
         } else {
             JOptionPane.showMessageDialog(null,"Невъзможно преместване върху синьо квадратче!",
                     "Грешка", JOptionPane.WARNING_MESSAGE);
-        }
+
+            }
 
     }
 
@@ -103,6 +106,16 @@ public class GameBoard extends JFrame implements MouseListener {
         }
     }
 
+    public void renderBabaYaga(int row, int col, Graphics g) {
+        if (this.isThereTile(row, col)) {
+            Tile t = (Tile)this.getTile(row, col);
+            t.getColor();
+            if(t.getColor() == Tile.nGreen) {
+                babaYaga.render(g);
+            }
+        }
+    }
+
     /**
      *  Метод, чрез който изчертаваме игралната дъска и нейните елементи.
      */
@@ -114,6 +127,7 @@ public class GameBoard extends JFrame implements MouseListener {
 
                 this.renderTiles(g, row, col);
                 this.renderPlayer(row, col, g);
+                this.renderBabaYaga(row, col, g);
             }
         }
     }
@@ -162,7 +176,7 @@ public class GameBoard extends JFrame implements MouseListener {
 
         Random rand = new Random();
         int randomN = rand.nextInt(4);
-        if ( randomN == 0) {
+        if ( randomN == 0 ) {
             return Tile.nBlue;
         } else return Tile.nYellow;
     }
@@ -186,6 +200,9 @@ public class GameBoard extends JFrame implements MouseListener {
                         (new GPS(firstRandomNumber, secondRandomNumber));
             } else i--;
         }
+
+        babaYaga.setRow(firstRandomNumber);
+        babaYaga.setCol(secondRandomNumber);
 
         for(int i = 0; i < 5; i++) {
             getRandomNumber();
@@ -234,6 +251,27 @@ public class GameBoard extends JFrame implements MouseListener {
         this.tileCollection[row][col] = this.selectedTile;
         this.selectedTile = null;
         this.repaint();
+    }
+
+    /**
+     *  Метод, чрез който проверяваме дали играча е стигнал до координатите на баба Яга.
+     */
+    public void hasPlayerFoundBabaYaga() {
+
+        if(player.getRow() == babaYaga.getRow() && player.getCol() == babaYaga.getCol()) {
+            int response = JOptionPane.showConfirmDialog(null, "Честито! Ти откри баба Яга и спечели играта!" +
+                            "Искаш ли да играеш отново?", "Край", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            if (response == JOptionPane.NO_OPTION) {
+                System.exit(0);
+            } else if (response == JOptionPane.YES_OPTION) {
+
+            } else if (response == JOptionPane.CLOSED_OPTION) {
+                System.exit(0);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,"За съжаление баба Яга не е тук, продължи да търсиш!",
+                    "Грешка", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
 }
